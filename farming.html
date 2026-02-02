@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Remote Keyboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <style>
+            nav {
+                margin-bottom: 20px;
+            }
+
+            /* spacing between rows */
+            .gut {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">ButtonBox</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/farming">Farming simulator</a>
+                    <a class="nav-link" href="#">Eurotruck simulator</a>
+                    <a class="nav-link" href="#">Fallout 4</a>
+                </div>
+                </div>
+            </div>
+        </nav>
+        <!-- / NAVBAR -->
+        <div class="container">
+            <div class="row gut">
+                <!-- Engine controls -->
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Engine
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-power"></i>&nbsp; Engine controls</h5>
+                            <p class="card-text">Control the engine</p>
+                            <div class="row">
+                                <div class="col">
+                                    <button onclick="sendKey('e')" class="btn btn-success w-100 position-relative btn-lg">Start
+                                        <span class="position-absolute top-0 start-100 translate-middle badge text-bg-dark">
+                                            e
+                                            <span class="visually-hidden">e button</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <button onclick="sendKey('shift+d')" class="btn btn-secondary w-100 position-relative btn-lg">Stop
+                                        <span class="position-absolute top-0 start-100 translate-middle badge text-bg-dark">
+                                            shift+d
+                                            <span class="visually-hidden">d button</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- / Engine controls -->
+                <!-- Plow control -->
+                 <div class="col-5">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Plow
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Plow Control</h5>
+                            <p class="card-text">Control the plow</p>
+                            <div class="row gut">
+                                <div class="col">
+                                    <button onclick="sendKey('x')" class="btn btn-outline-success w-100 position-relative btn-lg">Start
+                                        <span class="position-absolute top-0 start-100 translate-middle badge text-bg-success">
+                                            x
+                                            <span class="visually-hidden">x button</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <button onclick="sendKey('d')" class="btn btn-outline-primary w-100 position-relative btn-lg">
+                                        <i class="bi bi-chevron-up"></i> &nbsp; Up
+                                        <span class="position-absolute top-0 start-100 translate-middle badge text-bg-primary">
+                                            d
+                                            <span class="visually-hidden">d button</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row gut">
+                                <div class="col">
+                                    <button onclick="sendKey('y')" class="btn btn-outline-secondary w-100 position-relative btn-lg">Stop
+                                        <span class="position-absolute top-0 start-100 translate-middle badge text-bg-secondary">
+                                            y
+                                            <span class="visually-hidden">y button</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <button onclick="sendKey('f')" class="btn btn-outline-info w-100 position-relative btn-lg">
+                                        <i class="bi bi-chevron-down"></i> &nbsp; Down
+                                        <span class="position-absolute top-0 start-100 translate-middle badge text-bg-info">
+                                            f
+                                            <span class="visually-hidden">f button</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- / Plow control -->
+                 <div class="col">
+                    <button onclick="sendKey('p')" class="btn btn-info w-100 position-relative btn-lg h-100 w-100">
+                        <i class="bi bi-truck"></i> Huge button
+                        <span class="position-absolute top-0 start-100 translate-middle badge text-bg-primary">
+                            p
+                            <span class="visually-hidden">p button</span>
+                        </span>
+                    </button>
+                 </div>
+            </div>
+            <h2 class="display-6">Other controls</h2>
+            <div class="row gut">
+                <div class="col">
+                    <!-- CARD -->
+                    <button type="button" class="btn btn-outline-primary btn-lg">Horn</button>
+                    <!-- / CARD -->
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-secondary btn-lg">Lights</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-success btn-lg">Door</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-danger btn-lg">Roof</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-warning btn-lg">Trunk</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-info btn-lg">Enter</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-light btn-lg">Leave</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-dark btn-lg">GPS</button>
+                </div>
+            </div>
+            <div class="row gut">
+                <div class="col">
+                    <!-- CARD -->
+                    <button type="button" class="btn btn-primary btn-lg w-100">Horn</button>
+                    <!-- / CARD -->
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-secondary btn-lg">Lights</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-success btn-lg">Door</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-danger btn-lg">Roof</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-warning btn-lg">Trunk</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-info btn-lg">Enter</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-light btn-lg">Leave</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-dark btn-lg">GPS</button>
+                </div>
+            </div>
+            <h2 class="display-6">Grouped controls</h2>
+            <div class="row gut">
+                <div class="col">
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button type="button" class="btn btn-danger btn-lg">Upper</button>
+                        <button type="button" class="btn btn-warning btn-lg">Hold</button>
+                        <button type="button" class="btn btn-success btn-lg">Lower</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function sendKey(key) {
+                fetch('/press', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({key: key})
+                });
+                navigator.vibrate(50);
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    </body>
+</html>
