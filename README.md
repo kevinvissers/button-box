@@ -1,8 +1,12 @@
-# install python
-# install pip?
+# Button Box
+Webservice which is able to send keystrokes to the PC via a website
 
-run `pip install -r requirements.txt`
+# Installation
+- Install python
+- Install pip
+- Run `pip install -r requirements.txt`
 
-launch via `python server.py`
+# Execution
+Launch via `python server.py`
 
-hosted on `http://<computerIP>:5000`
+Hosted on `http://<computerIP>:5000`
