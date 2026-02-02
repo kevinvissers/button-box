@@ -7,11 +7,11 @@ keyboard = Controller()
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('.', 'pages/index.html')
 
 @app.route('/farming')
 def farming():
-    return send_from_directory('.', 'farming.html')
+    return send_from_directory('.', 'pages/farming.html')
 
 @app.route('/press', methods=['POST'])
 def press():
