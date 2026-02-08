@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="dark">
 
 <head>
     <title>Remote Keyboard</title>
@@ -42,15 +42,15 @@
         </div>
     </nav>
     <!-- / NAVBAR -->
-     <div class="container">
+     <div class="container-fluid">
         {% block content %}{% endblock %}
      </div>
     <script>
-        function sendKey(key) {
+        function sendKey(key, duration=0) {
             fetch('/press', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ key: key })
+                body: JSON.stringify({ key: key, duration: duration })
             });
             navigator.vibrate(50);
         }

@@ -1,6 +1,7 @@
 from flask import Flask, request, send_from_directory, render_template
 from pynput.keyboard import Controller, Key
 import threading
+import time
 
 app = Flask(__name__)
 keyboard = Controller()
@@ -26,33 +27,45 @@ def eurotruck():
         "caption": "Eurotruck"
     }]
 
-    buttons={}
-    buttons["start_stop"] = "e"
+    control = [
+        {
+            "caption": "power",
+            "key": "e",
+            "type": "btn-danger"
+        }
+    ]
 
     vehicle = [
         {
             "caption": "Handbrake",
             "key": "SPACE",
-            "type": "btn-warning"
+            "type": "btn-outline-danger"
         },
         {
-            "caption": "Engine break",
-            "key": "B",
-            "type": "btn-outline-warning"
+            "caption": "E-break",
+            "key": "b",
+            "type": "btn-outline-warning",
+            "separator": True
         },
         {
-            "caption": "Retarder +",
+            "caption": "Retarder+",
             "key": ";",
             "type": "btn-outline-info"
         },
         {
-            "caption": "Retarder -",
-            "key": "'",
+            "caption": "Retarder-",
+            "key": "\\'",
             "type": "btn-outline-info"
         },
         {
-            "caption": "Lift/Let down axle",
-            "key": "U",
+            "caption": "Axle",
+            "key": "u",
+            "type": "btn-outline-primary",
+            "separator": True
+        },
+        {
+            "caption": "Trailer",
+            "key": "t",
             "type": "btn-outline-primary"
         },
     ]
@@ -60,22 +73,22 @@ def eurotruck():
     lights = [
         {
             "caption": "Toggle",
-            "key": "L",
-            "type": "btn-primary"
+            "key": "l",
+            "type": "btn-outline-primary"
         },
         {
             "caption": "Hazard",
-            "key": "F",
-            "type": "btn-danger"
+            "key": "f",
+            "type": "btn-outline-danger"
         },
         {
-            "caption": "High beam",
-            "key": "K",
+            "caption": "H-Beam",
+            "key": "k",
             "type": "btn-outline-info"
         },
         {
             "caption": "Warning",
-            "key": "O",
+            "key": "o",
             "type": "btn-outline-warning"
         },
     ]
@@ -83,18 +96,21 @@ def eurotruck():
     signals = [
         {
             "caption": "Horn",
-            "key": "H",
-            "type": "btn-primary"
+            "key": "h",
+            "type": "btn-outline-primary",
+            "duration": 1
         },
         {
             "caption": "Pneumatic",
-            "key": "N",
-            "type": "btn-danger"
+            "key": "n",
+            "type": "btn-outline-light",
+            "duration": 1
         },
         {
             "caption": "Light",
-            "key": "J",
-            "type": "btn-outline-info"
+            "key": "j",
+            "type": "btn-outline-info",
+            "duration": 1
         },
     ]
 
@@ -106,8 +122,8 @@ def eurotruck():
         },
         {
             "caption": "play-fill",
-            "key": "R",
-            "type": "btn-success"
+            "key": "r",
+            "type": "btn-outline-success"
         },
         {
             "caption": "skip-forward-fill",
@@ -117,11 +133,85 @@ def eurotruck():
         
     ]
 
-    return render_template('eurotruck.html', navigation=navigation, buttons=buttons, vehicle=vehicle, lights=lights, signals=signals, audio=audio)
+    camera = [
+        {
+            "caption": "Interior",
+            "key": "&",
+            "type": "btn-outline-light"
+        },
+        {
+            "caption": "Following",
+            "key": "é",
+            "type": "btn-outline-light"
+        },
+        {
+            "caption": "Vertical",
+            "key": "\"",
+            "type": "btn-outline-light"
+        },
+        {
+            "caption": "Next",
+            "key": "ç",
+            "type": "btn-outline-light"
+        },
+    ]
+
+    manager = [
+        {
+            # World map
+            "caption": "globe",
+            "key": "m",
+            "type": "btn-outline-primary"
+        },
+        {
+            # Garage manager
+            "caption": "house-fill",
+            "key": "g",
+            "type": "btn-outline-primary",
+            "separator": True
+        },
+        {
+            # F5 - Mouse Control In Route Advisor
+            "caption": "mouse2",
+            "key": "F5",
+            "type": "btn-outline-info"
+        },
+        {
+            # F6 - Route Advisor: Navigation Page
+            "caption": "sign-turn-right-fill",
+            "key": "F6",
+            "type": "btn-outline-info"
+        },
+        {
+            # F7 - Route Advisor: Information About Orders
+            "caption": "list-task",
+            "key": "F7",
+            "type": "btn-outline-light"
+        },
+        {
+            # F8 - Route Advisor: Truck Diagnostics
+            "caption": "bug",
+            "key": "F8",
+            "type": "btn-outline-warning"
+        },
+        {
+            # F9 - Route Advisor Information Page
+            "caption": "info-circle",
+            "key": "F9",
+            "type": "btn-outline-info"
+        },
+    ]
+
+    return render_template('eurotruck.html', navigation=navigation, control=control, vehicle=vehicle, lights=lights, signals=signals, audio=audio, camera=camera, manager=manager)
 
 @app.route('/press', methods=['POST'])
 def press():
-    key = request.json.get('key')
+    key: str = request.json.get('key')
+    duration: int = int(request.json.get('duration'))
+
+    print("key: " + key)
+    print("duration: " + str(duration))
+
     if key == 'page-up':
         keyboard.press(Key.page_up)
         keyboard.release(Key.page_up)
@@ -129,14 +219,22 @@ def press():
     elif key == 'page-down':
         keyboard.press(Key.page_down)
         keyboard.release(Key.page_down)
+    
+    elif key == 'SPACE':
+        keyboard.press(Key.space)
+        keyboard.release(Key.space)
 
     elif key == 'shift+d':
         with keyboard.pressed(Key.shift):
             keyboard.press('d')
             keyboard.release('d')
     else:
-        keyboard.press(key)
-        keyboard.release(key)
+        keyboard.press(key.lower())
+
+        if duration != 0:
+            time.sleep(duration)
+
+        keyboard.release(key.lower())
     return '', 204
 
 
