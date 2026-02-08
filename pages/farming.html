@@ -17,6 +17,12 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
+        .btn-circle {
+            border-radius: 50%;
+            height: 150px;
+            width: 150px;
+        }
     </style>
 </head>
 
@@ -136,8 +142,8 @@
             </div>
             <!-- / Plow control -->
             <div class="col">
-                <button onclick="sendKey('p')" class="btn btn-info w-100 position-relative btn-lg h-100 w-100">
-                    <i class="bi bi-truck"></i> Huge button
+                <button onclick="sendKey('p')" class="btn btn-danger position-relative btn-lg btn-circle">
+                    <i class="bi bi-power display-6"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge text-bg-primary">
                         p
                         <span class="visually-hidden">p button</span>

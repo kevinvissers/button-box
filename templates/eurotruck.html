@@ -1,0 +1,179 @@
+{% extends "main.html" %}
+
+{% block css %}
+.circle-rad {
+    max-height: 130px;
+    max-width: 130px;
+}
+{% endblock %}
+
+{% block content %}
+<div class="row gut">
+    <!-- Start button -->
+    <div class="col-2 text-center">
+        <button onclick="sendKey('{{ buttons.start_stop }}')" class="btn btn-outline-danger btn-lg rounded-circle w-100 h-100 circle-rad">
+            <i class="bi bi-power display-3"></i>
+        </button>
+    </div>
+    <!-- / Start button-->
+
+    <!-- Vehicle controls-->
+    <div class="col-10">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-truck"></i>&nbsp; Vehicle controls</div>
+            <div class="card-body">
+                <div class="row">
+                    {% for item in vehicle %}
+                    <div class="col">
+                        <button onclick="sendKey('{{ item.key }}')" class="btn {{ item.type }} btn-lg h-100 w-100">{{ item.caption }}</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Vehicle controls -->
+</div>
+<div class="row gut">
+    <!-- Light controls-->
+    <div class="col-6 h-100">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-lightbulb"></i>&nbsp;Light controls</div>
+            <div class="card-body">
+                <div class="row">
+                    {% for item in lights %}
+                    <div class="col">
+                        <button onclick="sendKey('{{ item.key }}')" class="btn {{ item.type }} btn-lg h-100 w-100">{{ item.caption }}</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Light controls -->
+
+    <!-- Signal controls-->
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-soundwave"></i>&nbsp;Signal controls</div>
+            <div class="card-body">
+                <div class="row">
+                    {% for item in signals %}
+                    <div class="col">
+                        <button onclick="sendKey('{{ item.key }}')" class="btn {{ item.type }} btn-lg h-100 w-100">{{ item.caption }}</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Signal controls -->
+</div>
+<div class="row gut">
+    <!-- audio controls-->
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-music-note-beamed"></i>&nbsp;Music controls</div>
+            <div class="card-body">
+                <div class="row">
+                    {% for item in audio %}
+                    <div class="col">
+                        <button onclick="sendKey('{{ item.key }}')" class="btn {{ item.type }} btn-lg h-100 w-100"><i class="bi bi-{{ item.caption }}"></i></button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / audio controls -->
+</div>
+{% endblock %}
+
+<!--
+
+
+
+A - Turning Left
+D - Turning Right
+E - Start/Turn Off Engine
+SPACE - Handbrake
+B - Engine Breaking
+[ - Left Indicator
+] - Right Indicator
+F - Hazard Lights
+L - Lights Mode
+K - Main Beam Headlights
+O - Warning Lights
+H - Sound Signal
+J - Light Signal
+P - Windscreen Wipers
+C - Cruise Control
+I - Dashboard Display Mode
+ENTER - Confirm Selection
+T - Connect/Disconnect Trailer
+R - Go To Audio Player/Radio
+M - World Map
+G - Garage Manager
+ESC - Main Control Panel
+
+
+F2 - Show/Hide Mirrors
+F3 - Switching Beteen Modes Of Route Advisor
+F4 - Full Lights Control
+F5 - Mouse Control In Route Advisor
+F6 - Route Advisor: Navigation Page
+F7 - Route Advisor: Information About Orders
+F8 - Route Advisor: Truck Diagnostics
+F9 - Route Advisor Information Page
+F10 - Print Screen
+
+
+1 - Interior Camera
+2 - Following Camera
+3 - Vertical Camera
+4 - Roof Camera
+5 - Window Rear View Camera
+6 - Bumper Camera
+7 - Wheel Front View Camera
+8 Exterior Camera
+9 - Next Camera
+
+
+---------------------------------------
+
+
+
+Start/Stop Engine	E	Start the Truck
+Handbrake	Space	N/A
+Engine Breaking	B	N/A
+Retarder Power Increase	;	N/A
+Retarder Power Decrease	'	N/A
+Lift/Let down axle	U	Lift or drop axle
+
+Toggle Light Modes	L	Turn on all lights
+Hazard Lights	F	Enable hazard lights
+High Beam Headlights	K	Enable beams to see further in the dark
+Warning Lights	O	N/A
+
+Sound Signal (Horn)	H	Use horn
+Pneumatic Signal	N	N/A
+Light Signal	J	N/A
+
+Windshield Wipers	P	Enable wipers
+Cruise Control	C	Enable cruise control
+Dashboard Display Mode	I	Change in-truck displays
+Confirm Selection	Enter (Return)	Confirmation
+Connect/Disconnect Trailer	T	Connect or Disconnect Trailer from Truck
+
+Audio Player	R	Enable Player
+Audio Player (next favorite track)	Page Up	Play Music
+Audio Player (previous favorite track)	Page Down	Play Music
+
+World Map	M	View in-game map
+Garage Manager	G	Manage your garage
+Screenshot	F10	Take a Screenshot
+Main Control Panel	Esc	Pause Menu
+Interior Camera	1	Inside Camera.
+Third Person Camera	2	Outside Camera.
+
+-->
