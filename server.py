@@ -1,13 +1,18 @@
 from flask import Flask, request, send_from_directory, render_template
 from pynput.keyboard import Controller, Key
-import threading
 import time
 
 app = Flask(__name__)
 keyboard = Controller()
 
+dry_run = True
+
 @app.route('/')
 def index():
+    """
+    Display main page
+    """
+
     navigation = [{
         "active": "false",
         "href": "/eurotruck",
@@ -15,12 +20,12 @@ def index():
     }]
     return render_template('index.html', navigation=navigation)
 
-@app.route('/farming')
-def farming():
-    return send_from_directory('.', 'pages/farming.html')
-
 @app.route('/eurotruck')
 def eurotruck():
+    """
+    Display Eurotruck simulator button box
+    """
+    
     navigation = [{
         "active": "true",
         "href": "/eurotruck",
@@ -202,10 +207,24 @@ def eurotruck():
         },
     ]
 
-    return render_template('eurotruck.html', navigation=navigation, control=control, vehicle=vehicle, lights=lights, signals=signals, audio=audio, camera=camera, manager=manager)
+    return render_template('eurotruck.html',dry_run=dry_run, navigation=navigation, control=control, vehicle=vehicle, lights=lights, signals=signals, audio=audio, camera=camera, manager=manager)
+
+@app.route('/dryrun', methods=['POST'])
+def dryrun():
+    """
+    Disable or enable dry run mode
+    """
+
+    global dry_run
+    dry_run = request.json.get('value') == True
+    return '', 204
 
 @app.route('/press', methods=['POST'])
 def press():
+    """
+    Handle key-press event
+    """
+
     key: str = request.json.get('key')
     duration: int = int(request.json.get('duration'))
 
@@ -213,29 +232,70 @@ def press():
     print("duration: " + str(duration))
 
     if key == 'page-up':
-        keyboard.press(Key.page_up)
-        keyboard.release(Key.page_up)
+        _keyPress(Key.page_up)
 
     elif key == 'page-down':
-        keyboard.press(Key.page_down)
-        keyboard.release(Key.page_down)
+        _keyPress(Key.page_down)
     
     elif key == 'SPACE':
-        keyboard.press(Key.space)
-        keyboard.release(Key.space)
+        _keyPress(Key.space)
 
     elif key == 'shift+d':
-        with keyboard.pressed(Key.shift):
-            keyboard.press('d')
-            keyboard.release('d')
+        _keyPressWithHolder('d', Key.shift)
+
     else:
-        keyboard.press(key.lower())
+        _keyPressWithDuration(key, duration)
 
-        if duration != 0:
-            time.sleep(duration)
-
-        keyboard.release(key.lower())
     return '', 204
+
+
+def _keyPress(key):
+    """
+    Press and release a key
+    
+    :param key: Key to press
+    """
+
+    if not dry_run:
+        keyboard.press(key)
+        keyboard.release(key)
+    else:
+        print('DRYRUN - Pressing key ' + str(key))
+
+
+def _keyPressWithDuration(key, durationInSeconds):
+    """
+    Press and hold key before releasing
+    When duration is 0, the key is just pressed
+    
+    :param key: Key to press
+    :param duration: Duration in seconds to hold
+    """
+
+    if not dry_run:
+        keyboard.press(key.lower())
+        if durationInSeconds != 0:
+            time.sleep(durationInSeconds)
+        keyboard.release(key.lower())
+    else:
+        print('DRYRUN - Pressing key ' + str(key) + ' with duration ' + str(durationInSeconds))
+
+
+def _keyPressWithHolder(key, holder):
+    """
+    Press a key while holding another button
+    e.g SHIFT+A
+    
+    :param key: Key to press (e.g. A)
+    :param holder: Key which is holded while pressing the other key (e.g. SHIFT)
+    """
+    
+    if not dry_run:
+        with keyboard.pressed(holder):
+            keyboard.press(key)
+            keyboard.release(key)
+    else:
+        print('DRYRUN - Pressing key ' + str(key) + ' while holding ' + str(holder))
 
 
 if __name__ == '__main__':
